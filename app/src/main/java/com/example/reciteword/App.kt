@@ -1,6 +1,7 @@
 package com.example.reciteword
 
 import android.app.Application
+import com.tencent.mmkv.MMKV
 
 class App : Application() {
     companion object {
@@ -10,5 +11,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
+        MMKV.initialize(this)
     }
 }

@@ -5,7 +5,9 @@ import androidx.room.Room
 import com.example.reciteword.App.Companion.app
 import com.example.reciteword.database.AppDatabase
 import com.example.reciteword.database.dao.WordDao
+import com.example.reciteword.database.entity.BookID
 import com.example.reciteword.database.entity.Word
+import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -51,5 +53,16 @@ object Repository {
             .build()
         wordDao = db.getWordDao()
     }
+
+
+    private val mmkv = MMKV.defaultMMKV()
+    var currentBookID: BookID
+        get() {
+            val string = mmkv.decodeString("currentBookID") ?: BookID.CET4_1.toString()
+            return BookID.valueOf(string)
+        }
+        set(value) {
+            mmkv.encode("currentBookID", value.toString())
+        }
 
 }
