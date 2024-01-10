@@ -1,6 +1,6 @@
-package com.example.reciteword.ui.common
+package com.example.reciteword.ui.pages
 
-import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,27 +9,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.reciteword.Repository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun Loading(
-    msg: String, isLoading: Boolean
-) {
-    if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
+fun SplashPage(actions: AppActions) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        var loadingDatabase by remember {
+            mutableStateOf(false)
+        }
+        if (loadingDatabase) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -42,16 +49,18 @@ fun Loading(
                             .height(40.dp)
                     )
                     Spacer(Modifier.height(10.dp))
-                    Text(text = msg)
+                    Text(text = "应用初次进入需要初始化")
                 }
             }
         }
+        LaunchedEffect(key1 = Unit, block = {
+            launch {
+                delay(500)
+                loadingDatabase = true
+            }
+            Repository.initDatabase()
+            loadingDatabase = false
+            actions.toMain()
+        })
     }
-    BackHandler(isLoading) {}
-}
-
-@Preview
-@Composable
-fun LoadingPreview() {
-    Loading(msg = "加载中", isLoading = true)
 }

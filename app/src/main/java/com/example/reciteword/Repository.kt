@@ -6,7 +6,6 @@ import com.example.reciteword.App.Companion.app
 import com.example.reciteword.database.AppDatabase
 import com.example.reciteword.database.dao.WordDao
 import com.example.reciteword.database.entity.Word
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -18,16 +17,13 @@ object Repository {
     private lateinit var db: AppDatabase
     private lateinit var wordDao: WordDao
 
-    var dbIsInit: Boolean = false
-        internal set
-
     suspend fun getWords(): List<Word> {
         return withContext(IO) {
             wordDao.getWords()
         }
     }
 
-    suspend fun init() {
+    suspend fun initDatabase() {
         val dir = File(app.dataDir, "databases").apply {
             if (!exists()) mkdir()
         }
@@ -54,7 +50,6 @@ object Repository {
         db = Room.databaseBuilder(app, AppDatabase::class.java, APP_DATABASE_NAME)
             .build()
         wordDao = db.getWordDao()
-        dbIsInit = true
     }
 
 }

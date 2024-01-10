@@ -21,6 +21,7 @@ import com.example.reciteword.ui.pages.AppActions
 import com.example.reciteword.ui.pages.AppDestinations
 import com.example.reciteword.ui.pages.HomePage
 import com.example.reciteword.ui.pages.SettingPage
+import com.example.reciteword.ui.pages.SplashPage
 import com.example.reciteword.ui.theme.RecitewordTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,24 +34,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoadingDatabaseDialog()
                     Screen()
                 }
             }
         }
     }
-}
-
-@Composable
-fun LoadingDatabaseDialog() {
-    var loadingDatabase by remember {
-        mutableStateOf(true)
-    }
-    Loading(msg = "加载数据库中...", isLoading = loadingDatabase)
-    LaunchedEffect(key1 = Unit, block = {
-        Repository.init()
-        loadingDatabase = false
-    })
 }
 
 @Composable
@@ -61,11 +49,15 @@ fun Screen() {
     }
     NavHost(
         navController = navController,
-        startDestination = AppDestinations.HOME_PAGE_ROUTE,
+        startDestination = AppDestinations.SPLASH_PAGE_ROUTE,
         modifier = Modifier.fillMaxSize()
     ) {
+        composable(AppDestinations.SPLASH_PAGE_ROUTE) {
+            SplashPage(actions)
+        }
+
         composable(AppDestinations.HOME_PAGE_ROUTE) {
-            HomePage(actions = actions)
+            HomePage(actions)
         }
 
         composable(AppDestinations.SETTING_PAGE_ROUTE) {
