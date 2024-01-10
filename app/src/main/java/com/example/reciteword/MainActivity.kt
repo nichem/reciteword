@@ -1,14 +1,11 @@
 package com.example.reciteword
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,10 +13,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.reciteword.ui.dialog.Loading
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.reciteword.ui.common.Loading
+import com.example.reciteword.ui.pages.AppActions
+import com.example.reciteword.ui.pages.AppDestinations
+import com.example.reciteword.ui.pages.HomePage
+import com.example.reciteword.ui.pages.SettingPage
 import com.example.reciteword.ui.theme.RecitewordTheme
-import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     LoadingDatabaseDialog()
+                    Screen()
                 }
             }
         }
@@ -48,4 +51,25 @@ fun LoadingDatabaseDialog() {
         Repository.init()
         loadingDatabase = false
     })
+}
+
+@Composable
+fun Screen() {
+    val navController = rememberNavController()
+    val actions = remember(navController) {
+        AppActions(navController)
+    }
+    NavHost(
+        navController = navController,
+        startDestination = AppDestinations.HOME_PAGE_ROUTE,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        composable(AppDestinations.HOME_PAGE_ROUTE) {
+            HomePage(actions = actions)
+        }
+
+        composable(AppDestinations.SETTING_PAGE_ROUTE) {
+            SettingPage(actions)
+        }
+    }
 }
