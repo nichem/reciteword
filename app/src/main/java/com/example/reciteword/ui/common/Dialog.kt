@@ -19,39 +19,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 
 @Composable
 fun Loading(
-    msg: String, isLoading: Boolean
+    msg: String, onDismissRequest: () -> Unit
 ) {
-    if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    Dialog(onDismissRequest = onDismissRequest) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .defaultMinSize(100.dp)
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                CircularProgressIndicator(
                     modifier = Modifier
-                        .padding(10.dp)
-                        .defaultMinSize(100.dp)
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .width(40.dp)
-                            .height(40.dp)
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    Text(text = msg)
-                }
+                        .width(40.dp)
+                        .height(40.dp)
+                )
+                Spacer(Modifier.height(10.dp))
+                Text(text = msg)
             }
         }
     }
-    BackHandler(isLoading) {}
 }
 
 @Preview
 @Composable
 fun LoadingPreview() {
-    Loading(msg = "加载中", isLoading = true)
+    Loading(msg = "加载中") {}
 }
