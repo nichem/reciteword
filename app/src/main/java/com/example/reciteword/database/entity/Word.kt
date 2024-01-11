@@ -11,7 +11,7 @@ data class Word(
     /**
      * 0 没背过 1 背过
      */
-    val status: Int,
+    var status: Int,
     val text: String,
     /**
      * 音标
@@ -64,9 +64,9 @@ data class Word(
     /**
      * 记忆程度，根据这个去指导下次背的时间
      */
-    val rememberLevel: Int = 0,
+    var rememberLevel: Int = 0,
     /**
      * 下次背的时间
      */
-    val nextTime: String = ""
+    var nextTime: Long = 0
 )

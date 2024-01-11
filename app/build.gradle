@@ -71,4 +71,6 @@ dependencies {
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation 'com.tencent:mmkv:1.2.15'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    implementation "androidx.compose.runtime:runtime-livedata:1.4.0"
 }

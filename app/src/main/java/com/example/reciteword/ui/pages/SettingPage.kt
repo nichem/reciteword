@@ -55,7 +55,7 @@ import com.example.reciteword.database.entity.BookID
 fun SettingPage(actions: AppActions) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "设置") },
+            TopAppBar(title = { Text(text = "设置", fontSize = 16.sp) },
                 navigationIcon = {
                     IconButton(onClick = actions.upPress) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "")
