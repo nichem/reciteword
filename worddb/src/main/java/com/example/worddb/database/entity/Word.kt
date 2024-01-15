@@ -1,4 +1,4 @@
-package com.example.reciteword.database.entity
+package com.example.worddb.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

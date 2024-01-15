@@ -1,11 +1,11 @@
-package com.example.reciteword.database.dao
+package com.example.worddb.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.reciteword.database.entity.BookID
-import com.example.reciteword.database.entity.Word
+import com.example.worddb.database.entity.BookID
+import com.example.worddb.database.entity.Word
 
 @Dao
 interface WordDao {

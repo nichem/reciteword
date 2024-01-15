@@ -1,4 +1,4 @@
-package com.example.reciteword.utils
+package com.example.worddb.utils
 
 object Common {
     fun getNowDay(): Long {

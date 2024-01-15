@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "reciteword"
 include ':app'
+include ':worddb'

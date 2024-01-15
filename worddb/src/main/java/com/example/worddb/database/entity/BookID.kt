@@ -1,4 +1,4 @@
-package com.example.reciteword.database.entity
+package com.example.worddb.database.entity
 
 enum class BookID(val bookName: String) {
     Level8luan_2("专八核心词汇"),

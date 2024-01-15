@@ -1,22 +1,30 @@
-package com.example.reciteword
+package com.example.worddb
 
+import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.example.reciteword.App.Companion.app
-import com.example.reciteword.database.AppDatabase
-import com.example.reciteword.database.dao.WordDao
-import com.example.reciteword.database.entity.BookID
-import com.example.reciteword.database.entity.Word
-import com.example.reciteword.utils.Common.getNeedReviewDay
-import com.example.reciteword.utils.Common.getNowDay
+import com.example.worddb.database.AppDatabase
+import com.example.worddb.database.dao.WordDao
+import com.example.worddb.database.entity.BookID
+import com.example.worddb.database.entity.Word
+import com.example.worddb.utils.Common.getNeedReviewDay
+import com.example.worddb.utils.Common.getNowDay
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
-object Repository {
-    private const val APP_DATABASE_NAME = "tmp.db"
+class WordManager(private val context: Context) {
+
+    init {
+        MMKV.initialize(context)
+    }
+
+    companion object {
+        private const val APP_DATABASE_NAME = "tmp.db"
+        private const val PAGE_SIZE = 10
+    }
 
     private lateinit var db: AppDatabase
     private lateinit var wordDao: WordDao
@@ -27,7 +35,7 @@ object Repository {
         }
     }
 
-    private const val PAGE_SIZE = 10
+
     suspend fun getReciteWords(bookID: BookID?): List<Word> {
         if (bookID == null) return emptyList()
         return withContext(IO) {
@@ -75,17 +83,17 @@ object Repository {
     }
 
     suspend fun initDatabase() {
-        val dir = File(app.dataDir, "databases").apply {
+        val dir = File(context.dataDir, "databases").apply {
             if (!exists()) mkdir()
         }
-        val fileNames = app.assets.list("")?.filter {
+        val fileNames = context.assets.list("")?.filter {
             APP_DATABASE_NAME in it
         } ?: emptyList()
         Log.d("test", "${fileNames.toList()}")
         fileNames.forEach {
             val file = File(dir, it)
             if (file.exists()) return@forEach //continue
-            val ins = app.assets.open(it)
+            val ins = context.assets.open(it)
             val buffer = ByteArray(2048)
             withContext(IO) {
                 val outs = FileOutputStream(file)
@@ -98,7 +106,7 @@ object Repository {
                 outs.close()
             }
         }
-        db = Room.databaseBuilder(app, AppDatabase::class.java, APP_DATABASE_NAME)
+        db = Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE_NAME)
             .build()
         wordDao = db.getWordDao()
     }

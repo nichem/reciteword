@@ -1,7 +1,7 @@
-package com.example.reciteword.database
+package com.example.worddb.database
 
 import androidx.room.TypeConverter
-import com.example.reciteword.database.entity.BookID
+import com.example.worddb.database.entity.BookID
 
 class AppTypeConverters {
     @TypeConverter
