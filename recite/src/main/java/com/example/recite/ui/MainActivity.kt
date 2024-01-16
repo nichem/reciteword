@@ -67,12 +67,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @SuppressLint("SetTextI18n")
     private fun setWord(word: Word?) {
         if (word == null) return
-        binding.tvWord.text = word.text
-        binding.tvPhonetic.text = "[美]${word.usPhonetic} [英]${word.ukPhonetic}"
-        binding.tvTransCn.text = word.tranCN
-        binding.tvTransOther.text = word.tranOther
-        binding.tvSentence.text = word.sentence
-        binding.tvSentenceCn.text = word.sentenceCN
+        binding.tvWord.text = word.text.trim()
+        binding.tvPhonetic.text = "[美] ${word.usPhonetic}  [英] ${word.ukPhonetic}"
+        binding.tvTransCn.text = word.tranCN.trim()
+        binding.tvTransOther.text = word.tranOther.trim()
+        binding.tvSentence.text = word.sentence.trim()
+        binding.tvSentenceCn.text = word.sentenceCN.trim()
+        binding.tvPhrase.text = word.phrase.trim()
+        binding.tvPhraseCn.text = word.phraseCN.trim()
     }
 
     override fun onResume() {

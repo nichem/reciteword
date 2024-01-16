@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="@dimen/margin_20">
 
 
             <TextView
@@ -43,10 +43,11 @@
                 style="@style/TextStyle.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_20"
                 android:gravity="start"
                 android:singleLine="false"
-                android:text="释义" />
+                android:text="释义"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_trans_cn"
@@ -66,18 +67,46 @@
                 android:singleLine="false"
                 tools:text="This is a world" />
 
+            <TextView
+                style="@style/TextStyle.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:singleLine="false"
+                android:text="短语"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_phrase"
+                style="@style/TextStyle.Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                tools:text="世界" />
+
+            <TextView
+                android:id="@+id/tv_phrase_cn"
+                style="@style/TextStyle.Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                tools:text="This is a world" />
+
 
             <TextView
                 style="@style/TextStyle.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_20"
                 android:singleLine="false"
-                android:text="例句" />
+                android:text="例句"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_sentence"
-                style="@style/TextStyle.Content.wrap"
+                style="@style/TextStyle.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -85,7 +114,7 @@
 
             <TextView
                 android:id="@+id/tv_sentence_cn"
-                style="@style/TextStyle.Content.wrap"
+                style="@style/TextStyle.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
