@@ -1,6 +1,7 @@
 package com.example.recite.ui
 
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.SpanUtils
 import com.example.recite.R
 import com.example.recite.base.App.Companion.wordManager
 import com.example.recite.base.BaseActivity
@@ -11,6 +12,7 @@ import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.xuexiang.xui.widget.grouplist.XUICommonListItemView
 import com.xuexiang.xui.widget.grouplist.XUIGroupListView
 import kotlinx.coroutines.launch
+
 
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     override fun createBinding(): ActivitySettingBinding =
@@ -23,6 +25,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             detailText = wordManager.currentBookID.bookName
         }
         itemClear = binding.groupListView.createItemView("清除背诵记录")
+        val itemAbout = binding.groupListView.createItemView("关于")
         XUIGroupListView.newSection(this)
             .addItemView(itemBook) {
                 setBook()
@@ -39,6 +42,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                         resetDatabase()
                     }
                     .show()
+            }
+            .addItemView(itemAbout) {
+                about()
             }
             .addTo(binding.groupListView)
     }
@@ -80,5 +86,17 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             wordManager.resetDatabase()
             dialog.dismiss()
         }
+    }
+
+    private fun about() {
+        val packageInfo = packageManager.getPackageInfo(
+            packageName, 0
+        )
+        var versionName: String = packageInfo.versionName
+
+        MaterialDialog.Builder(this)
+            .content("作者：dlearn\n版本：${versionName}")
+            .positiveText("确认")
+            .show()
     }
 }
