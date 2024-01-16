@@ -47,6 +47,25 @@ class WordManager(private val context: Context) {
         }
     }
 
+    suspend fun getNotReciteWords(bookID: BookID?): List<Word> {
+        if (bookID == null) return emptyList()
+        return withContext(IO) {
+            val notRecite = wordDao.getNotReciteWords(bookID)
+            Log.d("test", "notRecite：${notRecite.size}")
+            notRecite
+        }
+    }
+
+    suspend fun getNeedReviewWords(bookID: BookID?): List<Word> {
+        if (bookID == null) return emptyList()
+        return withContext(IO) {
+            val today = getNowDay()
+            val needReview = wordDao.getNeedReviewWords(bookID, today)
+            Log.d("test", "needReview：${needReview.size}")
+            needReview
+        }
+    }
+
 
     suspend fun rememberWord(word: Word) {
         val reviewDay = getNeedReviewDay(word.rememberLevel)

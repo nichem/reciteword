@@ -6,13 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/ll"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="5dp"
+            android:paddingTop="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_word"
+                style="@style/TextStyle.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                android:textStyle="bold"
+                tools:text="World" />
+
+            <TextView
+                android:id="@+id/tv_phonetic"
+                style="@style/TextStyle.Explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                tools:text="音标：/naɪs/" />
+
+            <TextView
+                style="@style/TextStyle.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="start"
+                android:singleLine="false"
+                android:text="释义" />
+
+            <TextView
+                android:id="@+id/tv_trans_cn"
+                style="@style/TextStyle.Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                tools:text="世界" />
+
+            <TextView
+                android:id="@+id/tv_trans_other"
+                style="@style/TextStyle.Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false"
+                tools:text="This is a world" />
+
+
+            <TextView
+                style="@style/TextStyle.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:singleLine="false"
+                android:text="例句" />
+
+            <TextView
+                android:id="@+id/tv_sentence"
+                style="@style/TextStyle.Content.wrap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false" />
+
+            <TextView
+                android:id="@+id/tv_sentence_cn"
+                style="@style/TextStyle.Content.wrap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:singleLine="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.xuexiang.xui.widget.button.ButtonView
+            android:id="@+id/btn_forget"
+            style="@style/ButtonView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="10dp"
+            android:text="忘记了"
+            app:textSolidColor="@color/xui_config_color_red" />
+
+        <com.xuexiang.xui.widget.button.ButtonView
+            android:id="@+id/btn_normal"
+            style="@style/ButtonView.Gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:paddingVertical="10dp"
+            android:text="有印象" />
+
+        <com.xuexiang.xui.widget.button.ButtonView
+            android:id="@+id/btn_remember"
+            style="@style/ButtonView.Blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="10dp"
+            android:text="我知道" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
