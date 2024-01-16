@@ -30,6 +30,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled true
+    }
 }
 
 dependencies {
@@ -42,4 +45,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation(project(":worddb"))
+    implementation 'com.github.xuexiangjys:XUI:1.2.1'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+    implementation 'com.blankj:utilcodex:1.31.1'
 }
