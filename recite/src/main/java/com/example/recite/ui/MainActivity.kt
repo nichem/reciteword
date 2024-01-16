@@ -37,6 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         viewModel.stateText.observe(this) {
             getTitleBar().setSubTitle(it)
         }
+        viewModel.isReviewWord.observe(this) {
+            binding.btnForget.text = if (it) "忘记了" else "不知道"
+        }
         binding.btnForget.setOnClickListener {
             viewModel.operateWord(MainViewModel.Operation.Forget)
         }
@@ -93,6 +96,10 @@ class MainViewModel() : ViewModel() {
             "今日还需复习${leftCount}个单词"
         } else
             "还剩${noReciteWords.size - (it - needReviewWords.size)}个单词要学习"
+    }
+
+    val isReviewWord: LiveData<Boolean> = _wordIndex.map {
+        it < needReviewWords.size
     }
 
     fun initReciteWords() = viewModelScope.launch {

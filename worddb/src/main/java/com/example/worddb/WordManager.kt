@@ -130,6 +130,18 @@ class WordManager(private val context: Context) {
         wordDao = db.getWordDao()
     }
 
+    suspend fun resetDatabase() {
+        val dir = File(context.dataDir, "databases").apply {
+            if (!exists()) mkdir()
+        }
+        withContext(IO) {
+            dir.listFiles()?.forEach {
+                it.delete()
+            }
+        }
+        initDatabase()
+    }
+
 
     private val mmkv = MMKV.defaultMMKV()
     var currentBookID: BookID
