@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isGone
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,11 +35,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         viewModel.word.observe(this) {
             setWord(it)
         }
-        viewModel.stateText.observe(this) {
-            getTitleBar().setSubTitle(it)
-        }
-        viewModel.isReviewWord.observe(this) {
-            binding.btnForget.text = if (it) "忘记了" else "不知道"
+        viewModel.progressState.observe(this) {
+            //设置副标题
+            val leftCount = it.needReviewCount - it.index
+            val subTitle = if (leftCount > 0) {
+                "今日还需复习${leftCount}个单词"
+            } else
+                "还剩${it.noReciteCount - (it.index - it.needReviewCount)}个单词要学习"
+            getTitleBar().setSubTitle(subTitle)
+
+            //设置左边按钮文字
+            binding.btnForget.text = if (it.index < it.needReviewCount) "忘记了" else "不知道"
+
+            //设置进度
+            if (it.index < it.needReviewCount) {
+                binding.progress.isGone = false
+                binding.progress.max = it.needReviewCount
+                binding.progress.progress = it.index
+            } else {
+                binding.progress.isGone = true
+            }
         }
         binding.btnForget.setOnClickListener {
             viewModel.operateWord(MainViewModel.Operation.Forget)
@@ -84,6 +100,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 }
 
+data class ProgressState(
+    val index: Int, val needReviewCount: Int, val noReciteCount: Int
+)
+
 class MainViewModel() : ViewModel() {
     private var needReviewWords: List<Word> = emptyList()
     private var noReciteWords: List<Word> = emptyList()
@@ -92,16 +112,8 @@ class MainViewModel() : ViewModel() {
         getWord(it)
     }
 
-    val stateText: LiveData<String> = _wordIndex.map {
-        val leftCount = needReviewWords.size - it
-        if (leftCount > 0) {
-            "今日还需复习${leftCount}个单词"
-        } else
-            "还剩${noReciteWords.size - (it - needReviewWords.size)}个单词要学习"
-    }
-
-    val isReviewWord: LiveData<Boolean> = _wordIndex.map {
-        it < needReviewWords.size
+    val progressState: LiveData<ProgressState> = _wordIndex.map {
+        ProgressState(it, needReviewWords.size, noReciteWords.size)
     }
 
     fun initReciteWords() = viewModelScope.launch {

@@ -9,7 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/ll"
+        app:layout_constraintBottom_toTopOf="@id/progress"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -122,6 +122,14 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/ll"
+        app:mpb_progressStyle="horizontal" />
 
     <LinearLayout
         android:id="@+id/ll"
