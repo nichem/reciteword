@@ -24,6 +24,9 @@ interface WordDao {
         today: Long
     ): List<Word>
 
+    @Query("select * from word where bookID=:bookID and status=1 order by nextTime")
+    fun getAllRecitedWords(bookID: BookID): List<Word>
+
     @Update
     fun update(word: Word)
 }

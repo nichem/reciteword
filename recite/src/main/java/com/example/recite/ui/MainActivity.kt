@@ -72,7 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.initTitleBar(bar)
         bar.setTitle("背单词")
             .disableLeftView()
-            .addAction(object : ImageAction(R.drawable.baseline_settings_24) {
+            .addAction(object : ImageAction(R.drawable.baseline_more_horiz_24) {
                 override fun performAction(view: View?) {
                     //toSetting
                     ActivityUtils.startActivity(SettingActivity::class.java)

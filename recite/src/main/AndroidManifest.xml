@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reciteword">
         <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SettingActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/xui_config_color_white"
+    android:paddingHorizontal="5dp"
+    android:paddingTop="5dp">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/more"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_text"
+            style="@style/TextStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:singleLine="false"
+            android:textStyle="bold"
+            tools:text="Hello" />
+
+        <TextView
+            android:id="@+id/tv_trans_cn"
+            style="@style/TextStyle.Content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:singleLine="false"
+            android:textStyle="bold"
+            tools:text="你好" />
+    </LinearLayout>
+
+    <com.xuexiang.xui.widget.button.shadowbutton.ShadowButton
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/baseline_more_horiz_24_gray"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ll"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll"
+        app:sb_alpha_pressed="20" />
+
+    <TextView
+        android:id="@+id/tv_review"
+        style="@style/TextStyle.Explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        app:layout_constraintTop_toBottomOf="@+id/ll"
+        tools:text="11天后复习" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xui_list_divider_height_phone"
+        android:layout_marginTop="5dp"
+        android:background="@color/xui_config_color_separator_light_phone"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
