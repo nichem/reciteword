@@ -1,6 +1,8 @@
 package com.example.recite.ui
 
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
+import com.example.recite.R
 import com.example.recite.base.App.Companion.wordManager
 import com.example.recite.base.BaseActivity
 import com.example.recite.databinding.ActivitySettingBinding
@@ -10,6 +12,7 @@ import com.xuexiang.xui.widget.actionbar.TitleBar
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.xuexiang.xui.widget.grouplist.XUICommonListItemView
 import com.xuexiang.xui.widget.grouplist.XUIGroupListView
+import kotlinx.coroutines.launch
 
 
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
@@ -38,6 +41,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             accessoryType = XUICommonListItemView.ACCESSORY_TYPE_CHEVRON
         }
         val itemAbout = binding.groupListView.createItemView("关于")
+        val itemReset = binding.groupListView.createItemView("重置软件")
         XUIGroupListView.newSection(this)
             .addItemView(itemBook) {
                 setBook()
@@ -50,6 +54,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             }
             .addItemView(itemSkipToday) {
                 itemSkipToday.switch.isChecked = !itemSkipToday.switch.isChecked
+            }
+            .addTo(binding.groupListView)
+
+        XUIGroupListView.newSection(this)
+            .addItemView(itemReset) {
+                resetDatabase()
             }
             .addItemView(itemAbout) {
                 about()
@@ -94,4 +104,29 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             .positiveText("确认")
             .show()
     }
+
+    private fun resetDatabase() {
+        MaterialDialog.Builder(this)
+            .iconRes(R.drawable.baseline_warning_24)
+            .limitIconToDefaultSize()
+            .title("警告")
+            .content("此操作将清除你所有的背诵记录和做题记录！")
+            .positiveText("确认清除")
+            .negativeText("点错了")
+            .onPositive { _, _ ->
+                val dialog = MaterialDialog.Builder(this)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false)
+                    .content("清除中")
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
+                    .show()
+                lifecycleScope.launch {
+                    wordManager.resetDatabase()
+                    dialog.dismiss()
+                }
+            }
+            .show()
+    }
+
 }

@@ -40,39 +40,8 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>() {
         super.initTitleBar(bar)
         bar.setTitle("背诵历史")
             .setLeftClickListener { finish() }
-            .addAction(object : TextAction("清除") {
-                override fun performAction(view: View?) {
-                    resetDatabase()
-                }
-            })
-
     }
 
-    private fun resetDatabase() {
-        MaterialDialog.Builder(this)
-            .iconRes(R.drawable.baseline_warning_24)
-            .limitIconToDefaultSize()
-            .title("警告")
-            .content("此操作将清除你所有的背诵记录！")
-            .positiveText("确认清除")
-            .negativeText("点错了")
-            .onPositive { _, _ ->
-                val dialog = MaterialDialog.Builder(this)
-                    .progress(true, 0)
-                    .progressIndeterminateStyle(false)
-                    .content("清除中")
-                    .cancelable(false)
-                    .canceledOnTouchOutside(false)
-                    .show()
-                lifecycleScope.launch {
-                    wordManager.resetDatabase()
-                    val words = wordManager.getAllRecitedWords(wordManager.currentBookID)
-                    adapter.setList(words)
-                    dialog.dismiss()
-                }
-            }
-            .show()
-    }
 
 }
 
