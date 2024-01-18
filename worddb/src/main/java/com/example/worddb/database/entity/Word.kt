@@ -44,9 +44,9 @@ data class Word(
      */
     val explain: String,
     /**
-     * 答案相关
+     * 答案索引,1-4,若为负数则代表做过了
      */
-    val rightIndex: Int,
+    var rightIndex: Int,
     val choiceIndexOne: String,
     val choiceIndexTwo: String,
     val choiceIndexThree: String,

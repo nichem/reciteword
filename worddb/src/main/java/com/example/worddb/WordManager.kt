@@ -66,6 +66,21 @@ class WordManager(private val context: Context) {
         }
     }
 
+    suspend fun getQuestions(isAnswer: Boolean): List<Word> {
+        return withContext(IO) {
+            if (isAnswer) wordDao.getAnsweredQuestions()
+            else wordDao.getUnAnsweredQuestions()
+        }
+    }
+
+    suspend fun answerQuestion(word: Word?) {
+        if (word == null) return
+        withContext(IO) {
+            word.rightIndex = -word.rightIndex
+            wordDao.update(word)
+        }
+    }
+
 
     suspend fun rememberWord(word: Word) {
         val reviewDay = getNeedReviewDay(word.rememberLevel)

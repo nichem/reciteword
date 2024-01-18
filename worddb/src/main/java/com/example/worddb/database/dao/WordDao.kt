@@ -27,6 +27,15 @@ interface WordDao {
     @Query("select * from word where bookID=:bookID and status=1 order by nextTime")
     fun getAllRecitedWords(bookID: BookID): List<Word>
 
+    /**
+     * 获取没做过的题目
+     */
+    @Query("select * from word where rightIndex > 0")
+    fun getUnAnsweredQuestions(): List<Word>
+
+    @Query("select * from word where rightIndex < 0")
+    fun getAnsweredQuestions(): List<Word>
+
     @Update
     fun update(word: Word)
 }

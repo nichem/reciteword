@@ -19,11 +19,14 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     private lateinit var itemBook: XUICommonListItemView
     private lateinit var itemReciteHistory: XUICommonListItemView
     private lateinit var itemSkipToday: XUICommonListItemView
+    private lateinit var itemQuestion: XUICommonListItemView
     override fun initView() {
         itemBook = binding.groupListView.createItemView("词书").apply {
             detailText = wordManager.currentBookID.bookName
         }
-        itemReciteHistory = binding.groupListView.createItemView("背诵历史")
+        itemReciteHistory = binding.groupListView.createItemView("背诵历史").apply {
+            accessoryType = XUICommonListItemView.ACCESSORY_TYPE_CHEVRON
+        }
         itemSkipToday = binding.groupListView.createItemView("今日跳过复习").apply {
             accessoryType = XUICommonListItemView.ACCESSORY_TYPE_SWITCH
             switch.isChecked = wordManager.isSkipTodayReview()
@@ -31,10 +34,16 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 wordManager.skipToday = if (isChecked) Common.getNowDay() else 0
             }
         }
+        itemQuestion = binding.groupListView.createItemView("做下选择题").apply {
+            accessoryType = XUICommonListItemView.ACCESSORY_TYPE_CHEVRON
+        }
         val itemAbout = binding.groupListView.createItemView("关于")
         XUIGroupListView.newSection(this)
             .addItemView(itemBook) {
                 setBook()
+            }
+            .addItemView(itemQuestion) {
+                ActivityUtils.startActivity(QuestionActivity::class.java)
             }
             .addItemView(itemReciteHistory) {
                 ActivityUtils.startActivity(HistoryActivity::class.java)
