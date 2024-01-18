@@ -158,4 +158,12 @@ class WordManager(private val context: Context) {
             mmkv.encode("currentBookID", value.toString())
         }
 
+    var skipToday: Long
+        get() = mmkv.decodeLong("skipToday")
+        set(value) {
+            mmkv.encode("skipToday", value)
+        }
+
+    fun isSkipTodayReview(): Boolean = skipToday == getNowDay()
+
 }

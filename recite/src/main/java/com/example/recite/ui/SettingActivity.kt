@@ -5,6 +5,7 @@ import com.example.recite.base.App.Companion.wordManager
 import com.example.recite.base.BaseActivity
 import com.example.recite.databinding.ActivitySettingBinding
 import com.example.worddb.database.entity.BookID
+import com.example.worddb.utils.Common
 import com.xuexiang.xui.widget.actionbar.TitleBar
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.xuexiang.xui.widget.grouplist.XUICommonListItemView
@@ -17,11 +18,19 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     private lateinit var itemBook: XUICommonListItemView
     private lateinit var itemReciteHistory: XUICommonListItemView
+    private lateinit var itemSkipToday: XUICommonListItemView
     override fun initView() {
         itemBook = binding.groupListView.createItemView("词书").apply {
             detailText = wordManager.currentBookID.bookName
         }
         itemReciteHistory = binding.groupListView.createItemView("背诵历史")
+        itemSkipToday = binding.groupListView.createItemView("今日跳过复习").apply {
+            accessoryType = XUICommonListItemView.ACCESSORY_TYPE_SWITCH
+            switch.isChecked = wordManager.isSkipTodayReview()
+            switch.setOnCheckedChangeListener { _, isChecked ->
+                wordManager.skipToday = if (isChecked) Common.getNowDay() else 0
+            }
+        }
         val itemAbout = binding.groupListView.createItemView("关于")
         XUIGroupListView.newSection(this)
             .addItemView(itemBook) {
@@ -29,6 +38,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             }
             .addItemView(itemReciteHistory) {
                 ActivityUtils.startActivity(HistoryActivity::class.java)
+            }
+            .addItemView(itemSkipToday) {
+                itemSkipToday.switch.isChecked = !itemSkipToday.switch.isChecked
             }
             .addItemView(itemAbout) {
                 about()
@@ -66,7 +78,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         val packageInfo = packageManager.getPackageInfo(
             packageName, 0
         )
-        var versionName: String = packageInfo.versionName
+        val versionName: String = packageInfo.versionName
 
         MaterialDialog.Builder(this)
             .content("作者：dlearn\n版本：${versionName}")

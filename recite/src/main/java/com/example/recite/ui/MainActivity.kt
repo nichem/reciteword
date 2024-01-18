@@ -119,7 +119,8 @@ class MainViewModel() : ViewModel() {
     fun initReciteWords() = viewModelScope.launch {
         noReciteWords = wordManager.getNotReciteWords(wordManager.currentBookID)
         needReviewWords = wordManager.getNeedReviewWords(wordManager.currentBookID)
-        _wordIndex.postValue(0)
+        if (wordManager.isSkipTodayReview()) _wordIndex.postValue(needReviewWords.size)
+        else _wordIndex.postValue(0)
     }
 
     enum class Operation {
