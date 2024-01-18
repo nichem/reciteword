@@ -162,6 +162,11 @@ class WordManager(private val context: Context) {
         return withContext(IO) { wordDao.getAllRecitedWords(bookID = bookID) }
     }
 
+    suspend fun findRecitedWords(bookID: BookID?, query: String): List<Word> {
+        if (bookID == null) return emptyList()
+        return withContext(IO) { wordDao.findRecitedWords(bookID, "%$query%") }
+    }
+
 
     private val mmkv = MMKV.defaultMMKV()
     var currentBookID: BookID

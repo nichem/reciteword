@@ -34,4 +34,8 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     open fun hideTitleBar(): Boolean = false
 
     fun getTitleBar() = baseBinding.titleBar
+
+    fun addOver(view: View) {
+        baseBinding.flOver.addView(view)
+    }
 }

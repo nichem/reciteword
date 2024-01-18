@@ -27,6 +27,9 @@ interface WordDao {
     @Query("select * from word where bookID=:bookID and status=1 order by nextTime")
     fun getAllRecitedWords(bookID: BookID): List<Word>
 
+    @Query("select * from word where bookID=:bookID and status=1 and text like :like order by nextTime")
+    fun findRecitedWords(bookID: BookID, like: String): List<Word>
+
     /**
      * 获取没做过的题目
      */
